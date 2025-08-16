@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kerov</title>
+    <title>homsloder</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -117,6 +117,13 @@
             font-size: 40px;
             color: var(--accent);
             border: var(--border);
+            overflow: hidden;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .bio-item {
@@ -162,7 +169,7 @@
         }
 
         .social-link i {
-            margin-right: 8px;
+            font-size: 1.3rem;
         }
 
         /* Донаты */
@@ -191,44 +198,6 @@
 
         .donate-btn i {
             margin-right: 8px;
-        }
-
-        /* Информация о донате */
-        .donate-info-container {
-            margin-top: 16px;
-            padding: 16px;
-            background: rgba(0, 255, 255, 0.05);
-            border: var(--border);
-            border-radius: 10px;
-            display: none;
-        }
-
-        .donate-info {
-            font-family: monospace;
-            word-break: break-all;
-            margin: 8px 0;
-            padding: 10px;
-            background: #111;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-
-        .copy-btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background: var(--accent);
-            color: var(--bg);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        .copy-btn:hover {
-            background: #00cccc;
-            transform: translateY(-1px);
         }
 
         /* Чат */
@@ -408,6 +377,101 @@
             cursor: pointer;
         }
 
+        /* Donation Modal */
+        .donate-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .donate-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .donate-modal-content {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 16px;
+            border: var(--border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .donate-modal.active .donate-modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .donate-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: var(--border);
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .donate-body {
+            padding: 20px;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        .donate-info {
+            background: rgba(0, 255, 255, 0.05);
+            border: var(--border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-family: monospace;
+            word-break: break-all;
+            transition: background 0.3s;
+        }
+
+        .copy-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #00cccc;
+            transform: translateY(-1px);
+        }
+
+        .donate-close {
+            text-align: center;
+            padding: 10px 0 20px;
+            color: #777;
+            cursor: pointer;
+        }
+
+        .donate-close:hover {
+            color: var(--accent);
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -431,73 +495,50 @@
     <div class="main-container">
         <div class="content-card">
             <div class="card-body">
-                <div class="logo fade-in delay-1">kerov</div>
+                <div class="logo fade-in delay-1">homsloder</div>
 
                 <!-- Страницы -->
-                <div id="bio" class="page active">
+                <div id="bio-page" class="page active">
                     <div class="profile-icon fade-in delay-2 neon">
-                        <i class="fas fa-user"></i>
+                        <img src="https://kappa.lol/s9VJZs" alt="Profile Image">
                     </div>
-                    <div class="bio-item name fade-in delay-3">Мэр(сокращённо)</div>
+                    <div class="bio-item name fade-in delay-3">Мэр</div>
                     <div class="bio-item fade-in delay-4">15 лет</div>
-                    <div class="bio-item fade-in delay-4">Темщик</div>
-                    <div class="bio-item fade-in delay-5">Занимаюсь веб разработкой и т.д (вайб) </div>
+                    <div class="bio-item fade-in delay-5">Веб-разработка</div>
+                    <div class="bio-item fade-in delay-5">Темщик</div>
                 </div>
 
-                <div id="social" class="page">
+                <div id="social-page" class="page">
                     <h3 class="fade-in">Соцсети</h3>
                     <div class="social-grid">
-                        <a href="https://t.me/kerov_gu" target="_blank" class="social-link fade-in delay-1">
+                        <a href="https://t.me/kerov_project" target="_blank" class="social-link fade-in delay-1">
                             <i class="fab fa-telegram"></i> Telegram Канал
                         </a>
-                        <a href="https://t.me/kerov_tw" target="_blank" class="social-link fade-in delay-2">
+                        <a href="https://t.me/helsedov_prime" target="_blank" class="social-link fade-in delay-2">
                             <i class="fab fa-telegram"></i> Личный чат
                         </a>
-                        <a href="https://instagram.com/kerov_project" target="_blank" class="social-link fade-in delay-3">
-                            <i class="fab fa-instagram"></i> Проект в телеграм
+                        <a href="https://t.me/kerov_gu" target="_blank" class="social-link fade-in delay-3">
+                            <i class="fab fa-telegram"></i> сервис
                         </a>
                     </div>
                 </div>
 
-                <div id="donate" class="page">
+                <div id="donate-page" class="page">
                     <h3 class="fade-in">Поддержать</h3>
                     <div class="donate-grid">
-                        <div>
-                            <button class="donate-btn fade-in delay-1" data-donate="donate-1">
-                                <i class="fas fa-heart"></i> Donationalerts
-                            </button>
-                            <div class="donate-info-container" id="donate-info-1">
-                                <p>Переведи на карту:</p>
-                                <div class="donate-info">soon...</div>
-                                <p>Или через сервис:</p>
-                                <div class="donate-info">soon...</div>
-                                <button class="copy-btn" data-copy="2200 1234 5678 9012">Скопировать номер карты</button>
-                            </div>
-                        </div>
-                        <div>
-                            <button class="donate-btn fade-in delay-2" data-donate="donate-2">
-                                <i class="fab fa-ethereum"></i> Крипта: USDT (TRC20)
-                            </button>
-                            <div class="donate-info-container" id="donate-info-2">
-                                <p>Отправь на кошелёк:</p>
-                                <div class="donate-info">soon...</div>
-                                <button class="copy-btn" data-copy="TH1234abcd5678efgh9012ijklmnopqrstuv">Скопировать адрес</button>
-                            </div>
-                        </div>
-                        <div>
-                            <button class="donate-btn fade-in delay-3" data-donate="donate-3">
-                                <i class="fas fa-coffee"></i> Спонсируй кофе
-                            </button>
-                            <div class="donate-info-container" id="donate-info-3">
-                                <p>Номер карты:</p>
-                                <div class="donate-info">soon...</div>
-                                <button class="copy-btn" data-copy="2200 1234 5678 9012">Скопировать</button>
-                            </div>
-                        </div>
+                        <button class="donate-btn fade-in delay-1" data-donate="donate-1">
+                            <i class="fas fa-heart"></i> Donationalerts
+                        </button>
+                        <button class="donate-btn fade-in delay-2" data-donate="donate-2">
+                            <i class="fab fa-ethereum"></i> Крипта: USDT (TRC20)
+                        </button>
+                        <button class="donate-btn fade-in delay-3" data-donate="donate-3">
+                            <i class="fas fa-coffee"></i> Спонсируй кофе
+                        </button>
                     </div>
                 </div>
 
-                <div id="chat" class="page">
+                <div id="chat-page" class="page">
                     <h3 class="fade-in">Чат с ИИ</h3>
                     <div class="chat-container fade-in delay-1">
                         <div class="chat-messages" id="chat-messages">
@@ -527,16 +568,16 @@
                 <h3>Меню</h3>
             </div>
             <ul class="menu-items">
-                <li class="menu-item nav-link" data-page="bio">
+                <li class="menu-item nav-link" data-page="bio-page">
                     <i class="fas fa-user"></i> Био
                 </li>
-                <li class="menu-item nav-link" data-page="social">
+                <li class="menu-item nav-link" data-page="social-page">
                     <i class="fas fa-share-alt"></i> Соцсети
                 </li>
-                <li class="menu-item nav-link" data-page="donate">
+                <li class="menu-item nav-link" data-page="donate-page">
                     <i class="fas fa-gift"></i> Донаты
                 </li>
-                <li class="menu-item nav-link" data-page="chat">
+                <li class="menu-item nav-link" data-page="chat-page">
                     <i class="fas fa-robot"></i> Чат с ИИ
                 </li>
                 <li class="menu-item" id="theme-toggle">
@@ -546,8 +587,47 @@
         </div>
     </div>
 
+    <!-- Donation Modals -->
+    <div class="donate-modal" id="donate-modal-1">
+        <div class="donate-modal-content">
+            <div class="donate-header">Поддержать через Donationalerts</div>
+            <div class="donate-body">
+                <p>Переведи на карту:</p>
+                <div class="donate-info">soon</div>
+                <p>Или через сервис:</p>
+                <div class="donate-info">soon</div>
+                <button class="copy-btn" data-copy="soon">Скопировать номер карты</button>
+            </div>
+            <div class="donate-close close-donate">Закрыть</div>
+        </div>
+    </div>
+
+    <div class="donate-modal" id="donate-modal-2">
+        <div class="donate-modal-content">
+            <div class="donate-header">Крипто-донат (USDT TRC20)</div>
+            <div class="donate-body">
+                <p>Отправь на кошелёк:</p>
+                <div class="donate-info">soon</div>
+                <button class="copy-btn" data-copy="soon">Скопировать адрес</button>
+            </div>
+            <div class="donate-close close-donate">Закрыть</div>
+        </div>
+    </div>
+
+    <div class="donate-modal" id="donate-modal-3">
+        <div class="donate-modal-content">
+            <div class="donate-header">Спонсируй кофе</div>
+            <div class="donate-body">
+                <p>Номер карты:</p>
+                <div class="donate-info">soon</div>
+                <button class="copy-btn" data-copy="soon">Скопировать</button>
+            </div>
+            <div class="donate-close close-donate">Закрыть</div>
+        </div>
+    </div>
+
     <footer class="fade-in delay-1">
-        &copy; 2025 <a href="https://t.me/homsloder" style="color: var(--accent); text-decoration: none;">@homsloder</a>
+        &copy; 2025 <a href="https://t.me/kerov_tw" style="color: var(--accent); text-decoration: none;">@homsloder</a>
     </footer>
 
     <script>
@@ -580,9 +660,11 @@
             }
         });
 
-        // Навигация с анимацией
+        // Навигация с анимацией (исправлено)
         document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function (e) {
+                e.preventDefault(); // Предотвращаем переход по ссылке
+                
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
                 const pageId = this.getAttribute('data-page');
                 const page = document.getElementById(pageId);
@@ -618,34 +700,34 @@
                 : '<i class="fas fa-sun"></i> Светлая тема';
         });
 
-        // Обработчики кнопок доната
-        document.querySelectorAll('[data-donate]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const donateId = this.getAttribute('data-donate');
-                const infoContainer = document.getElementById(`donate-info-${donateId.slice(-1)}`);
-                
-                // Скрыть все остальные контейнеры
-                document.querySelectorAll('.donate-info-container').forEach(container => {
-                    container.style.display = 'none';
-                });
-                
-                // Показать нужный контейнер
-                if (infoContainer.style.display === 'block') {
-                    infoContainer.style.display = 'none';
-                } else {
-                    infoContainer.style.display = 'block';
-                }
+        // Донат-модальные окна
+        const donateButtons = document.querySelectorAll('[data-donate]');
+        const closeDonates = document.querySelectorAll('.close-donate');
+        const copyButtons = document.querySelectorAll('.copy-btn');
+
+        donateButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault(); // Предотвращаем переход по ссылке
+                const modalId = btn.getAttribute('data-donate');
+                document.getElementById(modalId).classList.add('active');
+            });
+        });
+
+        closeDonates.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.closest('.donate-modal').classList.remove('active');
             });
         });
 
         // Копирование
-        document.querySelectorAll('.copy-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
                 const text = this.getAttribute('data-copy');
                 navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.textContent;
                     this.textContent = 'Скопировано!';
                     setTimeout(() => {
-                        this.textContent = this.getAttribute('data-original') || 'Скопировать';
+                        this.textContent = originalText;
                     }, 1500);
                 });
             });
@@ -677,7 +759,7 @@
                 const data = await response.json();
                 return data.output?.text || "Ошибка.";
             } catch (error) {
-                return "Пошёл нахуй";
+                return "jejwjjwkeosodoisiek.";
             } finally {
                 typing.style.display = 'none';
             }
@@ -706,4 +788,4 @@
         });
     </script>
 </body>
-</html>
+                                </html>
